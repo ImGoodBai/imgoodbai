@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ICP备案,网站备案,域名备案,阿里云备案" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="万恶的ICP备案制度应该唾骂，主机架国外可以省去备案，但越來越恶劣的网络出口环境，实在无法接受...操作下来阿里云的个人代备案系统搞得还行。">
+<meta name="keywords" content="ICP备案,网站备案,域名备案,阿里云备案">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阿里云个人网站备案过程全记录">
+<meta property="og:url" content="http://goodbai.com/2014/04/10/HowToICP/index.html">
+<meta property="og:site_name" content="的博客">
+<meta property="og:description" content="万恶的ICP备案制度应该唾骂，主机架国外可以省去备案，但越來越恶劣的网络出口环境，实在无法接受...操作下来阿里云的个人代备案系统搞得还行。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://gtms03.alicdn.com/tps/i3/T1ZKqRFDteXXbW6QIE-541-903.jpg">
+<meta property="og:updated_time" content="2018-03-16T11:53:59.194Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="阿里云个人网站备案过程全记录">
+<meta name="twitter:description" content="万恶的ICP备案制度应该唾骂，主机架国外可以省去备案，但越來越恶劣的网络出口环境，实在无法接受...操作下来阿里云的个人代备案系统搞得还行。">
+<meta name="twitter:image" content="http://gtms03.alicdn.com/tps/i3/T1ZKqRFDteXXbW6QIE-541-903.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://goodbai.com/2014/04/10/HowToICP/"/>
+
+
+
+
+
+  <title>阿里云个人网站备案过程全记录 | 的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b256a515de4d09a354567784cc5163ac";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-豆瓣读书">
+          <a href="https://www.douban.com/people/bolf/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            豆瓣读书
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://goodbai.com/2014/04/10/HowToICP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Good Bai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">阿里云个人网站备案过程全记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-04-10T00:00:00+08:00">
+                2014-04-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  万恶的ICP备案制度应该唾骂，主机架国外可以省去备案，但越來越恶劣的网络出口环境，实在无法接受...操作下来阿里云的个人代备案系统搞得还行。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>入了Linode东京机房的VPS，国内ping值竟达到500ms（说是“携程信用卡事件”导致怎么的），可过了两天未见好转。加上SHLUG H4活动上@tinyfool 同学说备案一周可完成，果断要求Linode退了款，加入阿里云开始走ICP备案流程。</p>
+<p>##介绍</p>
+<p><strong>什么是ICP备案？</strong></p>
+<p>照例先码概念，什么是ICP备案，<strong>ICP备案</strong>（又叫网站备案、域名备案等）参考百度<a href="http://baike.baidu.com/view/67420.htm" target="_blank" rel="noopener">ICP备案</a>词条。《互联网信息服务管理办法》规定对<strong>非经营性互联网信息服务</strong>（对应经营性互联网信息服务商另有制度管理，一般试用盈利性质的企业））实行<strong>报备登记</strong>制度。</p>
+<p><strong>ICP备案的含义？</strong></p>
+<p>ICP备案的含义是主机、站长（个人或者法人）、域名和网站经营内容四者的一个绑定认证关系，啥意思呢？就是互联网不是法外之地，如果备案域名指向的这块地（主机）上，以后如果出了啥“漏子”，就拿经过实名认证的站长同学试问。</p>
+<p>反过来如果那个域名没有经备案主机提供商（如阿里云之类）就给予了接入权限，那一旦该域名指向的网站出了问题，当局是要拿主机提供商问罪的，所以国内一般大的主机提供商都要求入住的网站先备案再解析，这也是政策规定（当然也有一些小公司打打擦别球，不严格执行）。</p>
+<p><strong>几个细节说明</strong></p>
+<ol>
+<li>仅针对互联网信息服务实行备案制度，即通过80端口访问的http服务（通俗讲就是可通过浏览器访问到），而ftp/ssh等服务并不在此列（个人亲测阿里云亲测通过）;</li>
+<li>仅针对通过域名访问的情况，即如果你是通过ip地址直接访问你的网站，则不需要备案;</li>
+<li>如果你的主机不在神州大地（在境内），则不需要备案，因为该行为最终是由主机商执行，而境外直接无视该规定。</li>
+</ol>
+<p><strong>ICP备案的建议</strong></p>
+<p>下面情况建议直接选择国外主机商（如linode VPS之类），好处是省事，坏处是近来国外的主机抽风越來越严重（可能与GFW有染），访问延迟大。    </p>
+<ol>
+<li>嫌ICP备案太麻烦，不愿意折腾;</li>
+<li>网站内容见不得阳光;</li>
+</ol>
+<p>其他情况推荐尝试选用国内主机+ICP备案方案，整个流程比较复杂，但还算顺利，是个人网站备案，一个流程下来到最终核准共2周时间。</p>
+<p>下面内容记录了个人类域名在阿里云托管首次办理ICP备案过程，本例注册地为江苏苏州，不同地区过程可能有差异（如部分地区可能需要在文件上按手印，阿里云备案系统有提示）。  </p>
+<p>##总体流程</p>
+<p>阿里云首次备案指南：<a href="http://help.aliyun.com/view/13445871.html" target="_blank" rel="noopener">http://help.aliyun.com/view/13445871.html</a><br>阿里云备案管理系统入口：<a href="http://aliyun.gein.cn/webbaaliyun/login.action" target="_blank" rel="noopener">http://aliyun.gein.cn/webbaaliyun/login.action</a>  </p>
+<p>阿里云官方指南非常详细，下图出自<a href="http://help.aliyun.com/view/13445871.html" target="_blank" rel="noopener">阿里云首次备案指南</a><br><img src="http://gtms03.alicdn.com/tps/i3/T1ZKqRFDteXXbW6QIE-541-903.jpg" alt="阿里云ICP备案流程"></p>
+<h2 id="第一步-申请备案服务号"><a href="#第一步-申请备案服务号" class="headerlink" title="第一步 申请备案服务号"></a>第一步 申请备案服务号</h2><p>申请备案服务号前提条件：  </p>
+<ol>
+<li>已经购买一台云服务器主机（即VPS）;  </li>
+<li>为VPS绑定了一个公网IP;  </li>
+</ol>
+<p>满足如上后开始申请备案服务号，进入阿里云控制台&gt;点击用户名中的”用户中心”&gt;备案管理（或者直接进入<a href="http://bsn.aliyun.com/" target="_blank" rel="noopener">备案管理</a>，该步完成。</p>
+<h2 id="第二步-提交备案信息初审"><a href="#第二步-提交备案信息初审" class="headerlink" title="第二步 提交备案信息初审"></a>第二步 提交备案信息初审</h2><p>登陆<a href="http://aliyun.gein.cn/" target="_blank" rel="noopener">阿里云ICP代备案管理系统</a> （<strong>注意，代办系统独立于阿里云系统，需要重新申请帐号</strong>），填写备案信息，内容包括三方面：</p>
+<ul>
+<li>主体信息，即单位或个人名字，证件编号，地址之类;  </li>
+<li>网站信息，网站经营内容，行业分类等（该部分要注意内容）;  </li>
+<li>上传资料，包括身份证正反复印件、网站备案信息真实性核验单扫描件（<a href="http://aliyun.gein.cn/webbaaliyun/images/pics/upload_source15.jpg" target="_blank" rel="noopener">参考</a>）和信息安全管理协议扫描件（<a href="http://aliyun.gein.cn/webbaaliyun/images/pics/upload_source19_bj.jpg" target="_blank" rel="noopener">参考</a>）。  </li>
+</ul>
+<p>如上提交完成后，等待阿里将在一个工作日完成初审，<strong>注意，上述两份手写签名后的材料一定要留底，不能扔掉</strong>。</p>
+<h2 id="第三步-邮寄资料"><a href="#第三步-邮寄资料" class="headerlink" title="第三步 邮寄资料"></a>第三步 邮寄资料</h2><p>邮寄内容：  </p>
+<blockquote>
+<p>网站备案信息真实性核验单     原件一式三份<br>信息安全管理协议      原件一式三份  </p>
+</blockquote>
+<p>邮寄地址：  </p>
+<blockquote>
+<p>河南省洛阳市洛龙区太康路东段洛阳信息通信产业园顺兴园区9号楼4楼<br>收件人： 信息认证事业部 联系电话：15139943094<br>邮 编：471000</p>
+</blockquote>
+<h2 id="第四步-办理拍照"><a href="#第四步-办理拍照" class="headerlink" title="第四步 办理拍照"></a>第四步 办理拍照</h2><p>拍照需要专用幕布，有两种办法操作。<br>方法1：  </p>
+<blockquote>
+<p>前往拍照核验点免费办理拍照 （推荐！无需等待，当天即可办完）<br>请 XXX 本人携带以下资料前往核验点：<br>1、XXX 的身份证原件；<br>2、记录备案订单号：232200XXXXX；<br>拍照核验点工作时间： 自然日9:00-18:00（请提前电话联系） 查看您所在区域核验点地址   </p>
+</blockquote>
+<p>方法2：</p>
+<blockquote>
+<p> 申请邮寄幕布 您自行拍照后上传 ◆◆* 需等待幕布邮寄，约2-3个工作日<br>第1步、您已经申请过背景幕布<br>第2步、收到幕布后按《拍照说明》拍摄 XXX 本人照片,点击查看拍照说明<br>第3步、将拍好的幕布背景照片上传至系统  上传 XXX 照片  </p>
+<ul>
+<li>我们为您邮寄了2份背景幕布，分别是：“万网背景幕布”和“阿里云背景幕布”；<br>请您在收到幕布后，分别拍摄“万网幕布背景照片”和“阿里云幕布背景照片“。  </li>
+<li>幕布免费寄给您，拍照后幕布无需寄回，您可留下反复使用。  </li>
+</ul>
+</blockquote>
+<p>完成拍照后上传照片，照片要求分辨率800x600。我申请寄送幕布服务，幕布当天由北京经顺丰快递发出（第二天就收到），运费也是阿里方承担，且幕布也不需要寄回，这个要赞一下阿里（其实是万网）的服务，以后在上海有人ICP备案可以直接找我。</p>
+<h2 id="提交管局审核"><a href="#提交管局审核" class="headerlink" title="提交管局审核"></a>提交管局审核</h2><p>第三步和第四步完成，阿里云核对无误后将提交进入管局审核阶段，如下。</p>
+<blockquote>
+<p>您的照片和资料已经审核通过，阿里云 将在1<strong>个工作日</strong>内将您的备案信息提交至省通信管理局审核。</p>
+</blockquote>
+<p>接下来  </p>
+<blockquote>
+<p>阿里云 已经将您的备案信息提交至省通信管理局审核。<br>通信管理局正常审核时间为<strong>20个工作日</strong>内，请您耐心等候，备案成功后您将收到来自工信部的短信、邮件通知。 部分省通信管理局在备案审核过程中，可能会拨打您的电话进行核查，请保持<strong>您的座机和手机畅通</strong>并配合管局的核查。</p>
+</blockquote>
+<h2 id="审核通过"><a href="#审核通过" class="headerlink" title="审核通过"></a>审核通过</h2><p>提交管局后大概一周内收到了审核通过的短信通知。现在可以放心绑定域名到ip开始使用了。</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><ul>
+<li>提交备案申请后，需要停止该域名的解析（包括<a href="http://www.xxx子域名），否则阿里初审就会打回" target="_blank" rel="noopener">www.xxx子域名），否则阿里初审就会打回</a>;  </li>
+<li>域名提交后大概在一个工作日内即完成初审;  </li>
+<li>邮寄资料和拍照可同时进行（邮寄时走快递，到洛阳估计的一两天，而拍照是通过网络提交）;</li>
+<li>联系人手机号码归属地和申请备案本地要一致</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/02/13/WhyCOS_SoHot/" rel="next" title="为什么COS一出世逼格就这么高？">
+                <i class="fa fa-chevron-left"></i> 为什么COS一出世逼格就这么高？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/04/21/WXGJCodesAnalytics/" rel="prev" title="微信管家源代码分析和文档汇总-持续更新">
+                微信管家源代码分析和文档汇总-持续更新 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Good Bai</p>
+              <p class="site-description motion-element" itemprop="description">老白的个人博客，有技术文章，有工作总结，也有生活体会。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步-申请备案服务号"><span class="nav-number">1.</span> <span class="nav-text">第一步 申请备案服务号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二步-提交备案信息初审"><span class="nav-number">2.</span> <span class="nav-text">第二步 提交备案信息初审</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步-邮寄资料"><span class="nav-number">3.</span> <span class="nav-text">第三步 邮寄资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四步-办理拍照"><span class="nav-number">4.</span> <span class="nav-text">第四步 办理拍照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提交管局审核"><span class="nav-number">5.</span> <span class="nav-text">提交管局审核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#审核通过"><span class="nav-number">6.</span> <span class="nav-text">审核通过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">7.</span> <span class="nav-text">注意</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Good Bai</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

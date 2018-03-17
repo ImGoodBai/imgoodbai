@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="以图搜图,图片搜索,API " />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="使用Google或Baidu的以图搜图搜索女神的头像，便可尽收网络上该女神的所有&quot;隐私&quot;...，以图搜图隐私问题突出，各家都没有公开公共API，但多想想还是有办法的。">
+<meta name="keywords" content="以图搜图,图片搜索,API ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="可用的图片搜索（包括以图搜图）Web API全解析">
+<meta property="og:url" content="http://goodbai.com/2014/02/12/ImageSearchAPI/index.html">
+<meta property="og:site_name" content="的博客">
+<meta property="og:description" content="使用Google或Baidu的以图搜图搜索女神的头像，便可尽收网络上该女神的所有&quot;隐私&quot;...，以图搜图隐私问题突出，各家都没有公开公共API，但多想想还是有办法的。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-16T11:53:59.196Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="可用的图片搜索（包括以图搜图）Web API全解析">
+<meta name="twitter:description" content="使用Google或Baidu的以图搜图搜索女神的头像，便可尽收网络上该女神的所有&quot;隐私&quot;...，以图搜图隐私问题突出，各家都没有公开公共API，但多想想还是有办法的。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://goodbai.com/2014/02/12/ImageSearchAPI/"/>
+
+
+
+
+
+  <title>可用的图片搜索（包括以图搜图）Web API全解析 | 的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b256a515de4d09a354567784cc5163ac";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-豆瓣读书">
+          <a href="https://www.douban.com/people/bolf/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            豆瓣读书
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://goodbai.com/2014/02/12/ImageSearchAPI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Good Bai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">可用的图片搜索（包括以图搜图）Web API全解析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-02-12T00:00:00+08:00">
+                2014-02-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/API/" itemprop="url" rel="index">
+                    <span itemprop="name">API</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  使用Google或Baidu的以图搜图搜索女神的头像，便可尽收网络上该女神的所有"隐私"...，以图搜图隐私问题突出，各家都没有公开公共API，但多想想还是有办法的。 
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一般所指的图片搜索是通过关键字来搜索主题相关的图片，如搜索<a href="http://image.baidu.com/i?tn=baiduimage&amp;ipn=r&amp;ct=201326592&amp;cl=2&amp;lm=-1&amp;st=-1&amp;fm=result&amp;fr=&amp;sf=1&amp;fmq=1392186127987_R&amp;pv=&amp;ic=0&amp;nc=1&amp;z=&amp;se=1&amp;showtab=0&amp;fb=0&amp;width=&amp;height=&amp;face=0&amp;istype=2&amp;ie=utf-8&amp;word=%E7%BE%8E%E5%A5%B3" target="_blank" rel="noopener">MM</a>;以图搜图则是指通过手头已有的图片来搜索与之相似或者相同的图片，你可能有<a href="http://img.67.com/thumbs/upload/images/2013/09/11/eGlvbmdoYW5saW4xMzc4ODg5ODU5_7_h150_t.jpg" target="_blank" rel="noopener">这一张图片</a>，不知道图片上的人是谁，你可以试试百度以图搜图<a href="http://image.baidu.com/i?ct=3&amp;tn=shituresult&amp;pn=0&amp;rn=10&amp;querysign=762438889,4149743864&amp;q_txt=&amp;rainbow=1&amp;keyword=%E8%8B%8D%E4%BA%95%E7%A9%BA&amp;shituRetNum=173&amp;similarRetNum=600&amp;faceRetNum=0&amp;setnum=0&amp;beautynum=0&amp;imgurl=http://tutu1.baidu.com/1003/similar/20140212/18/762438889,4149743864.jpg" target="_blank" rel="noopener">搜一下</a>，该图片信息以及相关信息便一目了然。</p>
+<p>本文包括三部分内容：</p>
+<ol>
+<li>以图搜图API分析 </li>
+<li>图片识别和图片处理API分析;</li>
+<li>通过关键字搜索相关图片API分析。</li>
+</ol>
+<h2 id="以图搜图-API"><a href="#以图搜图-API" class="headerlink" title="以图搜图 API"></a>以图搜图 API</h2><p>以图搜图有下面几项用途：</p>
+<ol>
+<li>发现图片的来源与相关信息；</li>
+<li>研究追踪图片信息在互联网的传播；</li>
+<li>找到高分辨率版本的图片；</li>
+<li>找到有你照片的网页；</li>
+<li>看看这张图片有哪些不同版本。</li>
+</ol>
+<p>三个主流以图搜图引擎如下：</p>
+<ol>
+<li><a href="http://images.google.com.hk/imghp?hl=zh-CN" target="_blank" rel="noopener">Google搜图</a>;</li>
+<li><a href="http://stu.baidu.com/" target="_blank" rel="noopener">Baidu识图</a>;</li>
+<li><a href="http://tineye.com/" target="_blank" rel="noopener">TinEye</a>，对国内图片收录不理想。</li>
+</ol>
+<p>Google较保守，没有API可用;TinEye效果不理想；下面重点分析百度搜图API。  </p>
+<p>虽然Baidu没有公开其搜图API，但经过潜心挖掘，API其实是可用的，而且还支持JSON数据格式，如下：  </p>
+<p><strong>API形式1(参数tn可选faceresult/facejson)：</strong><br><a href="http://stu.baidu.com/i?objurl=http%3A%2F%2Fimages.enet.com.cn%2F2008%2F1225%2F96%2F1995683.jpg&amp;filename=&amp;rt=0&amp;rn=10&amp;ftn=searchstu&amp;ct=1&amp;stt=1&amp;tn=faceresult" target="_blank" rel="noopener">http://stu.baidu.com/i?objurl=http%3A%2F%2Fimages.enet.com.cn%2F2008%2F1225%2F96%2F1995683.jpg&amp;filename=&amp;rt=0&amp;rn=10&amp;ftn=searchstu&amp;ct=1&amp;stt=1&amp;tn=faceresult</a><br><strong>API形式2 (参数tn可选shituresult/facejson）：</strong><br><a href="http://stu.baidu.com/i?ct=3&amp;tn=shituresult&amp;pn=0&amp;rn=10&amp;querysign=3046724883,3054654929&amp;shituRetNum=8&amp;similarRetNum=600&amp;faceRetNum=1000&amp;setnum=0&amp;beautynum=0" target="_blank" rel="noopener">http://stu.baidu.com/i?ct=3&amp;tn=shituresult&amp;pn=0&amp;rn=10&amp;querysign=3046724883,3054654929&amp;shituRetNum=8&amp;similarRetNum=600&amp;faceRetNum=1000&amp;setnum=0&amp;beautynum=0</a><br><strong>API形式3：</strong><br><a href="http://stu.baidu.com/i?ct=3&amp;tn=facejson&amp;rn=6&amp;querysign=3544027739,3922013179&amp;shituRetNum=8&amp;similarRetNum=20&amp;faceRetNum=10&amp;setnum=0&amp;beautynum=0&amp;stt=1&amp;size_filter=-1&amp;tab=0&amp;pn=0&amp;date_filter=0&amp;width=&amp;height=&amp;ic=0&amp;z=&amp;sign=3046724883,3054654929" target="_blank" rel="noopener">http://stu.baidu.com/i?ct=3&amp;tn=facejson&amp;rn=6&amp;querysign=3544027739,3922013179&amp;shituRetNum=8&amp;similarRetNum=20&amp;faceRetNum=10&amp;setnum=0&amp;beautynum=0&amp;stt=1&amp;size_filter=-1&amp;tab=0&amp;pn=0&amp;date_filter=0&amp;width=&amp;height=&amp;ic=0&amp;z=&amp;sign=3046724883,3054654929</a>  </p>
+<p>对形式1 API分析示例如下：<a href="http://stu.baidu.com/i?objurl=http%3A%2F%2Fimages.enet.com.cn%2F2008%2F1225%2F96%2F1995683.jpg&amp;filename=&amp;rt=0&amp;rn=10&amp;ftn=searchstu&amp;ct=1&amp;stt=1&amp;tn=facejson" target="_blank" rel="noopener">http://stu.baidu.com/i?objurl=http%3A%2F%2Fimages.enet.com.cn%2F2008%2F1225%2F96%2F1995683.jpg&amp;filename=&amp;rt=0&amp;rn=10&amp;ftn=searchstu&amp;ct=1&amp;stt=1&amp;tn=facejson</a><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">        <span class="attr">"imgName"</span>:<span class="string">" "</span>,</span><br><span class="line">        <span class="attr">"imgQuerySign"</span>:<span class="string">"1478561841,3033972892"</span>,</span><br><span class="line">        <span class="attr">"displayNum"</span>:<span class="number">1000</span>,</span><br><span class="line">        <span class="attr">"listNum"</span>:<span class="number">1000</span>,</span><br><span class="line">        <span class="attr">"rank"</span>:<span class="number">0</span>,</span><br><span class="line">        <span class="attr">"beforeCt"</span>:<span class="number">3</span>,</span><br><span class="line">        <span class="attr">"keyword"</span>:<span class="string">""</span>,</span><br><span class="line">        <span class="attr">"data"</span>:[</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"thumbURL"</span>:<span class="string">"http://t2.baidu.com/it/u=2299942138,954331452&amp;fm=62&amp;gp=0.jpg"</span>,</span><br><span class="line">                <span class="attr">"middleURL"</span>:<span class="string">"http://t2.baidu.com/it/u=2299942138,954331452&amp;fm=62&amp;gp=0.jpg"</span>,</span><br><span class="line">                <span class="attr">"largeTnImageUrl"</span>:<span class="string">"http://t2.baidu.com/it/u=2299942138,954331452&amp;fm=62&amp;gp=0.jpg"</span>,</span><br><span class="line">                <span class="attr">"hoverURL"</span>:<span class="string">"http://t2.baidu.com/it/u=2299942138,954331452&amp;fm=62&amp;gp=0.jpg"</span>,</span><br><span class="line">                <span class="attr">"faceURL"</span>:<span class="string">"http://t2.baidu.com/it/u=2792293033,3107780835&amp;fm=61&amp;gp=0.jpg"</span>,</span><br><span class="line">                <span class="attr">"hasLarge"</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">"simi"</span>:<span class="string">"99"</span>,</span><br><span class="line">                <span class="attr">"objURLKey"</span>:<span class="string">""</span>,</span><br><span class="line">                <span class="attr">"pageNum"</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">"objURL"</span>:<span class="string">"http://img3.douban.com/view/photo/photo/public/p1221998136.jpg"</span>,</span><br><span class="line">                <span class="attr">"fromURL"</span>:<span class="string">"http://movie.douban.com/photos/photo/1221998136/"</span>,</span><br><span class="line">                <span class="attr">"fromURLEnc"</span>:<span class="string">"http://movie.douban.com/photos/photo/1221998136/"</span>,</span><br><span class="line">                <span class="attr">"fromURLHost"</span>:<span class="string">"http://movie.douban.com"</span>,</span><br><span class="line">                <span class="attr">"width"</span>:<span class="number">449</span>,</span><br><span class="line">                <span class="attr">"height"</span>:<span class="number">600</span>,</span><br><span class="line">                <span class="attr">"objId"</span>:<span class="number">255534948</span>,</span><br><span class="line">                <span class="attr">"objType"</span>:<span class="string">"jpg"</span>,</span><br><span class="line">                <span class="attr">"time"</span>:<span class="string">""</span>,</span><br><span class="line">                <span class="attr">"fileSize"</span>:<span class="string">"52"</span>,</span><br><span class="line">                <span class="attr">"fromPageTitle"</span>:</span><br><span class="line">                <span class="string">"替身姐妹 第一季 剧照 "</span>,</span><br><span class="line">                <span class="attr">"fromPageTitleEnc"</span>:<span class="string">"替身姐妹 第一季 剧照 "</span>,</span><br><span class="line">                <span class="attr">"textHost"</span>:<span class="string">"替身姐妹 第一季的剧照 "</span></span><br><span class="line">        &#125;,</span><br><span class="line">        ......</span><br><span class="line"></span><br><span class="line">        &#123;&#125;</span><br><span class="line">        ]</span><br><span class="line">&#125;</span><br><span class="line">~</span><br></pre></td></tr></table></figure></p>
+<p>##图片识别和图片处理API</p>
+<p>###faceplusplus<br><a href="http://www.faceplusplus.com.cn/" target="_blank" rel="noopener">faceplusplus</a>是北京一家专门做人脸处理技术的公司，被创新工厂投资，faceplusplus格式化人脸数据内容较丰富，提供的API也比较多，具体可以参考其<a href="http://cn.faceplusplus.com/dev/getting-started/core-concept/" target="_blank" rel="noopener">官方文档</a>。            </p>
+<p>查询URL示例：<a href="http://apicn.faceplusplus.com/v2/detection/detect?api_key=93fccb5a8b923956b0b6c5c8d416f0d1&amp;api_secret=5ib4xNwJtOkWY_0JLSZye4eod33YhsT2&amp;url=http://img.sucai.redocn.com/attachments/images/201204/20120417/Redocn_2012041310435227.jpg&amp;attribute=glass,pose,landmark,gender,age,race,smiling" target="_blank" rel="noopener">http://apicn.faceplusplus.com/v2/detection/detect?api_key=93fccb5a8b923956b0b6c5c8d416f0d1&amp;api_secret=5ib4xNwJtOkWY_0JLSZye4eod33YhsT2&amp;url=http://img.sucai.redocn.com/attachments/images/201204/20120417/Redocn_2012041310435227.jpg&amp;attribute=glass,pose,landmark,gender,age,race,smiling</a><br>结果分析：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"face"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"attribute"</span>: &#123;</span><br><span class="line">                <span class="attr">"age"</span>: &#123; <span class="attr">"range"</span>: <span class="number">5</span>,  <span class="attr">"value"</span>: <span class="number">18</span> &#125;, </span><br><span class="line">                <span class="attr">"gender"</span>: &#123; <span class="attr">"confidence"</span>: <span class="number">99.9997</span>,  <span class="attr">"value"</span>: <span class="string">"Female"</span>  &#125;, </span><br><span class="line">                <span class="attr">"glass"</span>: &#123;<span class="attr">"confidence"</span>: <span class="number">99.6323</span>, <span class="attr">"value"</span>: <span class="string">"None"</span>  &#125;, </span><br><span class="line">                <span class="attr">"landmark"</span>: &#123;</span><br><span class="line">                    <span class="attr">"left_eye_bottom"</span>: &#123;  <span class="attr">"x"</span>: <span class="number">38.091224</span>,   <span class="attr">"y"</span>: <span class="number">35.733333</span> &#125;, </span><br><span class="line">                    <span class="attr">"left_eye_center"</span>: &#123;  <span class="attr">"x"</span>: <span class="number">37.96097</span>,   <span class="attr">"y"</span>: <span class="number">34.152667</span> &#125;, </span><br><span class="line">                    <span class="attr">"left_eye_left_corner"</span>: &#123; <span class="attr">"x"</span>: <span class="number">31.142725</span>,    <span class="attr">"y"</span>: <span class="number">34.392</span>  &#125;, </span><br><span class="line">                    <span class="attr">"left_eye_pupil"</span>: &#123;  <span class="attr">"x"</span>: <span class="number">37.936028</span>,  <span class="attr">"y"</span>: <span class="number">33.488833</span>  &#125;, </span><br><span class="line">                    <span class="attr">"left_eye_right_corner"</span>: &#123;  <span class="attr">"x"</span>: <span class="number">44.779215</span>,   <span class="attr">"y"</span>: <span class="number">33.913167</span>  &#125;, </span><br><span class="line">                    <span class="attr">"left_eye_top"</span>: &#123;  <span class="attr">"x"</span>: <span class="number">37.607852</span>,  <span class="attr">"y"</span>: <span class="number">31.502833</span> &#125;, </span><br><span class="line">                    <span class="attr">"left_eyebrow_left_corner"</span>: &#123; <span class="attr">"x"</span>: <span class="number">27.275751</span>,    <span class="attr">"y"</span>: <span class="number">29.799167</span>  &#125;, </span><br><span class="line">                    <span class="attr">"left_eyebrow_right_corner"</span>: &#123;   <span class="attr">"x"</span>: <span class="number">46.726559</span>, </span><br><span class="line">                        <span class="attr">"y"</span>: <span class="number">29.188833</span></span><br><span class="line">                    &#125;, </span><br><span class="line">                    <span class="attr">"mouth_left_corner"</span>: &#123;</span><br><span class="line">                        <span class="attr">"x"</span>: <span class="number">44.079677</span>, </span><br><span class="line">                        <span class="attr">"y"</span>: <span class="number">57.167</span></span><br><span class="line">                </span><br><span class="line">......</span><br><span class="line">                <span class="string">"pose"</span>: &#123;</span><br><span class="line">                    <span class="attr">"pitch_angle"</span>: &#123;</span><br><span class="line">                        <span class="attr">"value"</span>: <span class="number">8.50726e-06</span></span><br><span class="line">                    &#125;, </span><br><span class="line">                    <span class="attr">"roll_angle"</span>: &#123;</span><br><span class="line">                        <span class="attr">"value"</span>: <span class="number">-0.609764</span></span><br><span class="line">                    &#125;, </span><br><span class="line">                    <span class="attr">"yaw_angle"</span>: &#123;</span><br><span class="line">                        <span class="attr">"value"</span>: <span class="number">11</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;, </span><br><span class="line">                <span class="attr">"race"</span>: &#123;</span><br><span class="line">                    <span class="attr">"confidence"</span>: <span class="number">88.9365</span>, </span><br><span class="line">                    <span class="attr">"value"</span>: <span class="string">"White"</span></span><br><span class="line">                &#125;, </span><br><span class="line">                <span class="attr">"smiling"</span>: &#123;</span><br><span class="line">                    <span class="attr">"value"</span>: <span class="number">4.79256</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, </span><br><span class="line">            <span class="attr">"face_id"</span>: <span class="string">"7493c03308095fa857ab2d1601e9fb40"</span>, </span><br><span class="line">            <span class="attr">"position"</span>: &#123;</span><br><span class="line">                <span class="attr">"center"</span>: &#123;  <span class="attr">"x"</span>: <span class="number">52.078522</span>, <span class="attr">"y"</span>: <span class="number">43.083333</span>    &#125;, </span><br><span class="line">                <span class="attr">"eye_left"</span>: &#123;   <span class="attr">"x"</span>: <span class="number">37.96097</span>,      <span class="attr">"y"</span>: <span class="number">34.152667</span>  &#125;, </span><br><span class="line">                <span class="attr">"eye_right"</span>: &#123;  <span class="attr">"x"</span>: <span class="number">67.255889</span>,  <span class="attr">"y"</span>: <span class="number">33.927667</span>  &#125;, </span><br><span class="line">                <span class="attr">"height"</span>: <span class="number">39.5</span>, </span><br><span class="line">                <span class="attr">"mouth_left"</span>: &#123;  <span class="attr">"x"</span>: <span class="number">44.079677</span>,   <span class="attr">"y"</span>: <span class="number">57.167</span> &#125;, </span><br><span class="line">                <span class="attr">"mouth_right"</span>: &#123;  <span class="attr">"x"</span>: <span class="number">65.088915</span>,    <span class="attr">"y"</span>: <span class="number">56.117167</span>   &#125;, </span><br><span class="line">                <span class="attr">"nose"</span>: &#123;   <span class="attr">"x"</span>: <span class="number">53.818938</span>,  <span class="attr">"y"</span>: <span class="number">44.897333</span>  &#125;, </span><br><span class="line">                <span class="attr">"width"</span>: <span class="number">54.734411</span></span><br><span class="line">            &#125;, </span><br><span class="line">            <span class="attr">"tag"</span>: <span class="string">""</span></span><br><span class="line">        &#125;</span><br><span class="line">    ], </span><br><span class="line">    <span class="attr">"img_height"</span>: <span class="number">830</span>, </span><br><span class="line">    <span class="attr">"img_id"</span>: <span class="string">"63d9362ea88e3c35c02b4ea8c79247d1"</span>, </span><br><span class="line">    <span class="attr">"img_width"</span>: <span class="number">600</span>, </span><br><span class="line">    <span class="attr">"session_id"</span>: <span class="string">"5bef10d1e65645548055fb3fd252f0a5"</span>, </span><br><span class="line">    <span class="attr">"url"</span>: <span class="string">"http://img.sucai.redocn.com/attachments/images/201204/20120417/Redocn_2012041310435227.jpg"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="baidu-人脸API"><a href="#baidu-人脸API" class="headerlink" title="baidu 人脸API"></a>baidu 人脸API</h3><p>百度人脸API，人脸格式化数据比Face++的少，也没有其他扩展的API（在其刚推出时试用过）。<br><a href="http://developer.baidu.com/cloud/media" target="_blank" rel="noopener">参考文档</a><br><a href="http://bcs.duapp.com/cplat-01/mediacloud/face/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%ABREST_API%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3_v1.02.pdf" target="_blank" rel="noopener">人脸识别REST\ API帮助文档.pdf</a></p>
+<p>申请baidu人脸识别API（新版管理平台中点击媒体云进入）：<br><a href="http://developer.baidu.com/console#newmedia/face/service!appid=1306930" target="_blank" rel="noopener">http://developer.baidu.com/console#newmedia/face/service!appid=1306930</a></p>
+<p>申请通过在开发者网站首页-&gt;消息中心收到通知：</p>
+<blockquote>
+<p>应用《随手查查》的“人脸识别API”API权限申请对接成功<br>时间：2013-10-17 16:22<br>亲爱的开发者：</p>
+<p>恭喜您，应用《随手查查》的“人脸识别API”API权限申请信息对接成功，“人脸识别API”权限已开启，请前往 控制台-高蛋白助手-API管理 查看。</p>
+<p>百度开发者中心</p>
+</blockquote>
+<p>Baidu BAE控制台API管理<a href="http://developer.baidu.com/dev#/api/1306930/list" target="_blank" rel="noopener">页面</a> ,API TOKEN获取：<a href="https://openapi.baidu.com/oauth/2.0/token?grant_type=client_credentials&amp;client_id=ANGEgE28iVZYfWqOY80ih0Az&amp;client_secret=5hmFiSRasZgysAca6ExIdv89BfTyG2RW&amp;" target="_blank" rel="noopener">API</a></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">"expires_in"</span>:<span class="number">2592000</span>,</span><br><span class="line"><span class="attr">"refresh_token"</span>:<span class="string">"4.ab4354e2545382b48013925c5c200b73.315360000.1697428984.282335-1306930"</span>,</span><br><span class="line"><span class="attr">"access_token"</span>:<span class="string">"3.59af4cc25f0c6397b9013dd0b0d60638.2592000.1384660984.282335-1306930"</span>,</span><br><span class="line"><span class="attr">"session_secret"</span>:<span class="string">"f3999ceb76fbbd86d0806ff9b29a81b7"</span>,</span><br><span class="line"><span class="attr">"session_key"</span>:<span class="string">"94rmKleH9+FtnYAQbkzv41BxHhIrh5U7BCNykDa0H\/Bf7AKYaywg6AEYYcfyGTJ0xIp76EER6axW1CcKrPY+2ZUrFVo="</span>,</span><br><span class="line"><span class="attr">"scope"</span>:<span class="string">"public wise_adapt media_face"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>scope: <a href="http://developer.baidu.com/wiki/index.php?title=docs/oauth/list" target="_blank" rel="noopener">http://developer.baidu.com/wiki/index.php?title=docs/oauth/list</a>  </p>
+<p>请求示例: <a href="https://openapi.baidu.com/rest/2.0/media/v1/face/detect?access_token=3.59af4cc25f0c6397b9013dd0b0d60638.2592000.1384660984.282335-1306930&amp;url=http://c.hiphotos.bdimg.com/album/s%3D800/sign=6bd70c1da044ad342abf8a87e0a00c08/8d5494eef01f3a29d7017b3e9825bc315d607c71.jpg" target="_blank" rel="noopener">https://openapi.baidu.com/rest/2.0/media/v1/face/detect?access_token=3.59af4cc25f0c6397b9013dd0b0d60638.2592000.1384660984.282335-1306930&amp;url=http://c.hiphotos.bdimg.com/album/s%3D800/sign=6bd70c1da044ad342abf8a87e0a00c08/8d5494eef01f3a29d7017b3e9825bc315d607c71.jpg</a>  </p>
+<p>注意:query string 需要先进行 urlencode</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">"face":[&#123;  //在原图片中检测到的人脸数组</span><br><span class="line">    "face_id":"e4fbc65ac9ea4135a9c4cda0294ccd5f",</span><br><span class="line">    "attribute":&#123;</span><br><span class="line">        "gender":&#123;"confidence":"0.558445","value":"male"&#125;,  //检测到的人脸的性别及置信度</span><br><span class="line">        "smiling":&#123;"confidence":"0.140648"&#125;,  //检测到的笑脸及置信度</span><br><span class="line">        "face":&#123;"value":"true","confidence":"1"&#125; / /？</span><br><span class="line">    &#125;,</span><br><span class="line">    "position":&#123; //检测到的人脸的位置,坐标均进行了归一化,值在 0~1 之间，中心坐标</span><br><span class="line">        "center":&#123;"x":"0.389400","y":"0.403700"&#125;,/ /人脸区域中心 坐标</span><br><span class="line">        "width":"0.353520",  //人脸区域宽</span><br><span class="line">        "height":"0.243930", //人脸区域宽</span><br><span class="line">        "eye_left":&#123;"x":"0.284900","y":"0.354970"&#125;,</span><br><span class="line">        "eye_right":&#123;"x":"0.449460","y":"0.344870"&#125;,</span><br><span class="line">        "mouth":&#123;"x":"0.373490","y":"0.482450"&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;],</span><br><span class="line">"img_id":"2b0e035557a04ad49e6f054f2556e4b6",</span><br><span class="line">"url":"http:\/\/c.hiphotos.bdimg.com\/album\/s=800\/sign=6bd70c1da044ad342abf8a87e0a00c08\/8d5494eef01f3a29d7017b3e9825bc315d607c71.jpg",  //请求中的图片 url</span><br><span class="line">"session_id":"16d2e9271173dc7c307b7cd2be4328e5",  //唯一标识请求，目前好像没有价值</span><br><span class="line">"img_width":"138",  </span><br><span class="line">"img_height":"200"  //图片宽度</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="通过关键字搜索相关图片API"><a href="#通过关键字搜索相关图片API" class="headerlink" title="通过关键字搜索相关图片API"></a>通过关键字搜索相关图片API</h2><h3 id="baidu-图片搜索API（非以图搜图）"><a href="#baidu-图片搜索API（非以图搜图）" class="headerlink" title="baidu 图片搜索API（非以图搜图）"></a>baidu 图片搜索API（非以图搜图）</h3><p>大部分的网民都喜欢看图片胜过看文字，尤其是美女这类信息，图片来的更为直接一些。</p>
+<p>所以图片搜索就变得非常重要了。</p>
+<p>百度图片搜索官方并没有开放API出来，但我们可以直接使用它的ajax请求网址作为api使用，因为它返回的数据格式是json格式的，它是非常通用的数据格式。</p>
+<p>百度图片搜索API地址]<br><a href="http://image.baidu.com/i?tn=baiduimagejson&amp;ct=201326592&amp;cl=2&amp;lm=-1&amp;st=-1&amp;fm=result&amp;fr=&amp;sf=1&amp;fmq=1349413075627_R&amp;pv=&amp;ic=0&amp;nc=1&amp;z=&amp;se=1&amp;showtab=0&amp;fb=0&amp;width=&amp;height=&amp;face=0&amp;istype=2&amp;word=girl&amp;rn=2&amp;pn=1" target="_blank" rel="noopener">http://image.baidu.com/i?tn=baiduimagejson&amp;ct=201326592&amp;cl=2&amp;lm=-1&amp;st=-1&amp;fm=result&amp;fr=&amp;sf=1&amp;fmq=1349413075627_R&amp;pv=&amp;ic=0&amp;nc=1&amp;z=&amp;se=1&amp;showtab=0&amp;fb=0&amp;width=&amp;height=&amp;face=0&amp;istype=2&amp;word=girl&amp;rn=2&amp;pn=1</a>  </p>
+<p>主要参数：<br>word，查询关键词<br>rn，每页显示图片数量<br>pn，图片显示的页码</p>
+<p>其它参数照抄上述api地址中的就行。</p>
+<p>##参考：<br><a href="http://2sitebbs.com/thread-695-1-1.html" target="_blank" rel="noopener">http://2sitebbs.com/thread-695-1-1.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/02/12/Baike_Translation_LunarAPI/" rel="next" title="百科_翻译_黄历API分析和常用符号表">
+                <i class="fa fa-chevron-left"></i> 百科_翻译_黄历API分析和常用符号表
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/02/13/WhyCOS_SoHot/" rel="prev" title="为什么COS一出世逼格就这么高？">
+                为什么COS一出世逼格就这么高？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Good Bai</p>
+              <p class="site-description motion-element" itemprop="description">老白的个人博客，有技术文章，有工作总结，也有生活体会。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#以图搜图-API"><span class="nav-number">1.</span> <span class="nav-text">以图搜图 API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#baidu-人脸API"><span class="nav-number">1.1.</span> <span class="nav-text">baidu 人脸API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过关键字搜索相关图片API"><span class="nav-number">2.</span> <span class="nav-text">通过关键字搜索相关图片API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#baidu-图片搜索API（非以图搜图）"><span class="nav-number">2.1.</span> <span class="nav-text">baidu 图片搜索API（非以图搜图）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Good Bai</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

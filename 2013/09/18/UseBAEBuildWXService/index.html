@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="微信公共帐号,BAE" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="当你在公司、在家里抑或咖啡馆连上了一个免费AP，享受互联网冲浪无比畅快的同时，背后可能正有双眼睛在监视着，MM们正在臭美的QQ空间，GG们正浏览的&quot;照片&quot;，甚至是银行卡等帐号信息...这到底是怎么回事？">
+<meta name="keywords" content="微信公共帐号,BAE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用BAE搭建微信公号“小秘书”后台服务">
+<meta property="og:url" content="http://goodbai.com/2013/09/18/UseBAEBuildWXService/index.html">
+<meta property="og:site_name" content="的博客">
+<meta property="og:description" content="当你在公司、在家里抑或咖啡馆连上了一个免费AP，享受互联网冲浪无比畅快的同时，背后可能正有双眼睛在监视着，MM们正在臭美的QQ空间，GG们正浏览的&quot;照片&quot;，甚至是银行卡等帐号信息...这到底是怎么回事？">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-16T11:53:59.179Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用BAE搭建微信公号“小秘书”后台服务">
+<meta name="twitter:description" content="当你在公司、在家里抑或咖啡馆连上了一个免费AP，享受互联网冲浪无比畅快的同时，背后可能正有双眼睛在监视着，MM们正在臭美的QQ空间，GG们正浏览的&quot;照片&quot;，甚至是银行卡等帐号信息...这到底是怎么回事？">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://goodbai.com/2013/09/18/UseBAEBuildWXService/"/>
+
+
+
+
+
+  <title>利用BAE搭建微信公号“小秘书”后台服务 | 的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b256a515de4d09a354567784cc5163ac";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-豆瓣读书">
+          <a href="https://www.douban.com/people/bolf/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            豆瓣读书
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://goodbai.com/2013/09/18/UseBAEBuildWXService/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Good Bai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">利用BAE搭建微信公号“小秘书”后台服务</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-09-18T00:00:00+08:00">
+                2013-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  当你在公司、在家里抑或咖啡馆连上了一个免费AP，享受互联网冲浪无比畅快的同时，背后可能正有双眼睛在监视着，MM们正在臭美的QQ空间，GG们正浏览的"照片"，甚至是银行卡等帐号信息...这到底是怎么回事？
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>##BAE搭建微信公共号</p>
+<p>搭建mp.weixin认证服务参考：<a href="http://blog.sina.com.cn/s/blog_73b905910101a3xk.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_73b905910101a3xk.html</a><br>参照上面执行，微信开发者认证，下一步开启消息推送服务。默认的demo修改如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//$wechatObj-&gt;valid();</span><br><span class="line">$wechatObj-&gt;responseMsg();</span><br></pre></td></tr></table></figure>
+<p>这时，给公众号发生任意非空内容，将收到回复“Welcome to wechat world!”。如果还是没有收到，或许是你开启了“编辑模式”。</p>
+<p>##BAE 搭建微信公号自动响应服务<br>计费策略：<a href="http://developer.baidu.com/wiki/index.php?title=docs/cplat/billing" target="_blank" rel="noopener">http://developer.baidu.com/wiki/index.php?title=docs/cplat/billing</a></p>
+<p>##增加翻译功能</p>
+<p>###Build 翻译<br><a href="http://www.cnblogs.com/mchina/p/3170565.html" target="_blank" rel="noopener">http://www.cnblogs.com/mchina/p/3170565.html</a><br>baidu翻译文档：<a href="http://developer.baidu.com/wiki/index.php?title=帮助文档首页/百度翻译/翻译API" target="_blank" rel="noopener">http://developer.baidu.com/wiki/index.php?title=帮助文档首页/百度翻译/翻译API</a></p>
+<p>###youdao 翻译<br><a href="http://fanyi.youdao.com/openapi?path=data-mode" target="_blank" rel="noopener">http://fanyi.youdao.com/openapi?path=data-mode</a></p>
+<p>##参考<br>google search (天气预报 上海 api) <a href="http://www.google.com.hk/search?newwindow=1&amp;safe=strict&amp;client=safari&amp;rls=en&amp;q=%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5+%E4%B8%8A%E6%B5%B7+api&amp;oq=%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5+%E4%B8%8A%E6%B5%B7+api&amp;gs_l=serp.12...0.0.0.83631886.0.0.0.0.0.0.0.0..0.0....0...1c..26.serp..0.0.0.RRVw2C1mR_w" target="_blank" rel="noopener">http://www.google.com.hk/search?newwindow=1&amp;safe=strict&amp;client=safari&amp;rls=en&amp;q=%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5+%E4%B8%8A%E6%B5%B7+api&amp;oq=%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5+%E4%B8%8A%E6%B5%B7+api&amp;gs_l=serp.12...0.0.0.83631886.0.0.0.0.0.0.0.0..0.0....0...1c..26.serp..0.0.0.RRVw2C1mR_w</a></p>
+<p><a href="http://www.weather.com.cn/data/cityinfo/101010100.html" target="_blank" rel="noopener">Beijing</a><br><a href="http://www.weather.com.cn/data/cityinfo/101190401.html" target="_blank" rel="noopener">Suzhou</a></p>
+<p>##backup<br>有道翻译API申请成功<br>API key：2122702772<br>keyfrom：goodbaiA<br>创建时间：2013-09-15<br>网站名称：goodbaiA<br>网站地址：<a href="http://goodbai.duapp.com" target="_blank" rel="noopener">http://goodbai.duapp.com</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/09/16/QuickBlogOnGithubPage/" rel="next" title="使用Github Page搭建最快的博客">
+                <i class="fa fa-chevron-left"></i> 使用Github Page搭建最快的博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/12/24/UseGoagentCrossLan/" rel="prev" title="利用BAE搭建Goagent代理服务突破内网封锁">
+                利用BAE搭建Goagent代理服务突破内网封锁 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Good Bai</p>
+              <p class="site-description motion-element" itemprop="description">老白的个人博客，有技术文章，有工作总结，也有生活体会。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Good Bai</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

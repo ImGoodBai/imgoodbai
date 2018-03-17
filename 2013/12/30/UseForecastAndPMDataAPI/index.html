@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="天气预报接口,PM2.5,PM10,API" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="因微信公共号提供城市天气预报服务，发现网山天气预报接口和环境数据接口方面资料比较乱，而且有不少内容已经失效，下面内容由过程日志整理形成，希望有人可用得上。">
+<meta name="keywords" content="天气预报接口,PM2.5,PM10,API">
+<meta property="og:type" content="article">
+<meta property="og:title" content="天气预报及环境指数开放API综合分析">
+<meta property="og:url" content="http://goodbai.com/2013/12/30/UseForecastAndPMDataAPI/index.html">
+<meta property="og:site_name" content="的博客">
+<meta property="og:description" content="因微信公共号提供城市天气预报服务，发现网山天气预报接口和环境数据接口方面资料比较乱，而且有不少内容已经失效，下面内容由过程日志整理形成，希望有人可用得上。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://goodbai.com/images/about/suishou_WX.jpg">
+<meta property="og:updated_time" content="2018-03-16T11:53:59.196Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="天气预报及环境指数开放API综合分析">
+<meta name="twitter:description" content="因微信公共号提供城市天气预报服务，发现网山天气预报接口和环境数据接口方面资料比较乱，而且有不少内容已经失效，下面内容由过程日志整理形成，希望有人可用得上。">
+<meta name="twitter:image" content="http://goodbai.com/images/about/suishou_WX.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://goodbai.com/2013/12/30/UseForecastAndPMDataAPI/"/>
+
+
+
+
+
+  <title>天气预报及环境指数开放API综合分析 | 的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b256a515de4d09a354567784cc5163ac";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-豆瓣读书">
+          <a href="https://www.douban.com/people/bolf/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            豆瓣读书
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://goodbai.com/2013/12/30/UseForecastAndPMDataAPI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Good Bai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">天气预报及环境指数开放API综合分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-12-30T00:00:00+08:00">
+                2013-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  因微信公共号提供城市天气预报服务，发现网山天气预报接口和环境数据接口方面资料比较乱，而且有不少内容已经失效，下面内容由过程日志整理形成，希望有人可用得上。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>因微信公共号提供城市天气预报服务，发现网山天气预报接口和环境数据接口方面资料比较乱，而且有不少内容已经失效，下面内容由过程日志整理形成，希望有人可用得上。</p>
+<p>##一 天气预报接口分析</p>
+<p>国内的天气预报<strong>数据</strong>，主要是国家气象局和国外两个来源（指数据来源）。  </p>
+<ul>
+<li><strong>国外</strong>方面主要是雅虎（XML格式，谷歌已经停掉了自家的天气API）；  </li>
+<li><strong>国内</strong>数据由国家气象局提供（JSON格式）。  </li>
+</ul>
+<p>在知乎看到过一篇专业人士评论，雅虎可以提供全球范围的且非常精细的天气数据（小时级更新），但主要是通过计算机自动生成。而国家气象局则是各地经验丰富的专家人士结合计算机综合分析得出，在准确性上更胜一筹。我就这样信了！  </p>
+<p>###国家气象局天气接口</p>
+<p>气象局的天气预报主页：[移动版] (<a href="http://mobile.weather.com.cn/city/101020100.html" target="_blank" rel="noopener">http://mobile.weather.com.cn/city/101020100.html</a>) [普通版] (<a href="http://www.weather.com.cn/" target="_blank" rel="noopener">http://www.weather.com.cn/</a>) ,仔细挖掘这两个地址可以发现很多好东西哦。    </p>
+<p><strong>特点：接口多，来自weather.com.cn和mobile.weather.com.cn都有，次数不限制，服务稳定，功能全面，优先推荐。</strong></p>
+<p>####1. 实时天气接口<br>有多个接口，好像差别不大：<br>实时天气1：<a href="http://www.weather.com.cn/data/sk/101190408.html" target="_blank" rel="noopener">http://www.weather.com.cn/data/sk/101190408.html</a><br>实时天气2：<a href="http://www.weather.com.cn/data/cityinfo/101190408.html" target="_blank" rel="noopener">http://www.weather.com.cn/data/cityinfo/101190408.html</a><br>实时天气3（带时间戳）：<a href="http://mobile.weather.com.cn/data/sk/101010100.html?_=1381891661455" target="_blank" rel="noopener">http://mobile.weather.com.cn/data/sk/101010100.html?_=1381891661455</a></p>
+<p>####2. 一周天气预报接口 </p>
+<ul>
+<li>7天预报数据<br>URL： <a href="http://mobile.weather.com.cn/data/forecast/101010100.html?_=1381891660081" target="_blank" rel="noopener">http://mobile.weather.com.cn/data/forecast/101010100.html?_=1381891660081</a><br>该接口来源气象局移动版网站，目测数据最为精确，详细接口格式如下：      <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;c&quot;:&#123;&quot;c1&quot;:&quot;101010100&quot;,&quot;c2&quot;:&quot;beijing&quot;,&quot;c3&quot;:&quot;北京&quot;,&quot;c4&quot;:&quot;beijing&quot;,&quot;c5&quot;:&quot;北京&quot;,&quot;c6&quot;:&quot;beijing&quot;,&quot;c7&quot;:&quot;北京&quot;,&quot;c8&quot;:&quot;china&quot;,&quot;c9&quot;:&quot;中国&quot;,&quot;c10&quot;:&quot;1&quot;,&quot;c11&quot;:&quot;010&quot;,&quot;c12&quot;:&quot;100000&quot;,&quot;c13&quot;:&quot;116.391&quot;,&quot;c14&quot;:&quot;39.904&quot;,&quot;c15&quot;:&quot;33&quot;,&quot;c16&quot;:&quot;AZ9010&quot;,&quot;c17&quot;:&quot;+8&quot;&#125;,</span><br><span class="line">&quot;f&quot;:&#123;&quot;f1&quot;:</span><br><span class="line">    [</span><br><span class="line">    &#123;&quot;fa&quot;:&quot;01&quot;,&quot;fb&quot;:&quot;03&quot;,&quot;fc&quot;:&quot;10&quot;,&quot;fd&quot;:&quot;5&quot;,&quot;fe&quot;:&quot;0&quot;,&quot;ff&quot;:&quot;0&quot;,&quot;fg&quot;:&quot;0&quot;,&quot;fh&quot;:&quot;0&quot;,&quot;fi&quot;:&quot;06:21|17:40&quot;&#125;, </span><br><span class="line">    &#123;&quot;fa&quot;:&quot;07&quot;,&quot;fb&quot;:&quot;07&quot;,&quot;fc&quot;:&quot;19&quot;,&quot;fd&quot;:&quot;12&quot;,&quot;fe&quot;:&quot;0&quot;,&quot;ff&quot;:&quot;0&quot;,&quot;fg&quot;:&quot;0&quot;,&quot;fh&quot;:&quot;0&quot;,&quot;fi&quot;:&quot;06:22|17:38&quot;&#125;,</span><br><span class="line">    &#123;&quot;fa&quot;:&quot;02&quot;,&quot;fb&quot;:&quot;00&quot;,&quot;fc&quot;:&quot;15&quot;,&quot;fd&quot;:&quot;5&quot;,&quot;fe&quot;:&quot;8&quot;,&quot;ff&quot;:&quot;8&quot;,&quot;fg&quot;:&quot;3&quot;,&quot;fh&quot;:&quot;1&quot;,&quot;fi&quot;:&quot;06:23|17:37&quot;&#125;,</span><br><span class="line">    &#123;&quot;fa&quot;:&quot;00&quot;,&quot;fb&quot;:&quot;00&quot;,&quot;fc&quot;:&quot;16&quot;,&quot;fd&quot;:&quot;4&quot;,&quot;fe&quot;:&quot;0&quot;,&quot;ff&quot;:&quot;0&quot;,&quot;fg&quot;:&quot;0&quot;,&quot;fh&quot;:&quot;0&quot;,&quot;fi&quot;:&quot;06:24|17:35&quot;&#125;,</span><br><span class="line">    &#123;&quot;fa&quot;:&quot;00&quot;,&quot;fb&quot;:&quot;00&quot;,&quot;fc&quot;:&quot;18&quot;,&quot;fd&quot;:&quot;7&quot;,&quot;fe&quot;:&quot;0&quot;,&quot;ff&quot;:&quot;0&quot;,&quot;fg&quot;:&quot;0&quot;,&quot;fh&quot;:&quot;0&quot;,&quot;fi&quot;:&quot;06:25|17:34&quot;&#125;,</span><br><span class="line">    &#123;&quot;fa&quot;:&quot;00&quot;,&quot;fb&quot;:&quot;01&quot;,&quot;fc&quot;:&quot;18&quot;,&quot;fd&quot;:&quot;8&quot;,&quot;fe&quot;:&quot;0&quot;,&quot;ff&quot;:&quot;0&quot;,&quot;fg&quot;:&quot;0&quot;,&quot;fh&quot;:&quot;0&quot;,&quot;fi&quot;:&quot;06:26|17:32&quot;&#125;,</span><br><span class="line">    &#123;&quot;fa&quot;:&quot;01&quot;,&quot;fb&quot;:&quot;01&quot;,&quot;fc&quot;:&quot;16&quot;,&quot;fd&quot;:&quot;6&quot;,&quot;fe&quot;:&quot;0&quot;,&quot;ff&quot;:&quot;0&quot;,&quot;fg&quot;:&quot;0&quot;,&quot;fh&quot;:&quot;0&quot;,&quot;fi&quot;:&quot;06:27|17:31&quot;&#125;],</span><br><span class="line">&quot;f0&quot;:&quot;201310121100&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>详细接口分析如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//格式说明</span><br><span class="line">var format=&#123;fa:图片1,fb：图片2,fc:温度1,fd：温度2,fe:风向1,ff：风向2,fg:风力1,fh：风力2,fi:日出日落&#125;;  </span><br><span class="line">//定义天气类型</span><br><span class="line">var weatherArr=&#123;&quot;00&quot;:&quot;晴&quot;,&quot;01&quot;:&quot;多云&quot;,&quot;02&quot;:&quot;阴&quot;,&quot;03&quot;:&quot;阵雨&quot;,&quot;04&quot;:&quot;雷阵雨&quot;,&quot;05&quot;:&quot;雷阵雨伴有冰雹&quot;,&quot;06&quot;:&quot;雨夹雪&quot;,&quot;07&quot;:&quot;小雨&quot;,&quot;08&quot;:&quot;中雨&quot;,&quot;09&quot;:&quot;大雨&quot;,&quot;10&quot;:&quot;暴雨&quot;,&quot;11&quot;:&quot;大暴雨&quot;,&quot;12&quot;:&quot;特大暴雨&quot;,&quot;13&quot;:&quot;阵雪&quot;,&quot;14&quot;:&quot;小雪&quot;,&quot;15&quot;:&quot;中雪&quot;,&quot;16&quot;:&quot;大雪&quot;,&quot;17&quot;:&quot;暴雪&quot;,&quot;18&quot;:&quot;雾&quot;,&quot;19&quot;:&quot;冻雨&quot;,&quot;20&quot;:&quot;沙尘暴&quot;,&quot;21&quot;:&quot;小到中雨&quot;,&quot;22&quot;:&quot;中到大雨&quot;,&quot;23&quot;:&quot;大到暴雨&quot;,&quot;24&quot;:&quot;暴雨到大暴雨&quot;,&quot;25&quot;:&quot;大暴雨到特大暴雨&quot;,&quot;26&quot;:&quot;小到中雪&quot;,&quot;27&quot;:&quot;中到大雪&quot;,&quot;28&quot;:&quot;大到暴雪&quot;,&quot;29&quot;:&quot;浮尘&quot;,&quot;30&quot;:&quot;扬沙&quot;,&quot;31&quot;:&quot;强沙尘暴&quot;,&quot;53&quot;:&quot;霾&quot;,&quot;99&quot;:&quot;&quot;&#125;;  </span><br><span class="line">//定义风向数组  </span><br><span class="line">var fxArr=&#123;&quot;0&quot;:&quot;无持续风向&quot;,&quot;1&quot;:&quot;东北风&quot;,&quot;2&quot;:&quot;东风&quot;,&quot;3&quot;:&quot;东南风&quot;,&quot;4&quot;:&quot;南风&quot;,&quot;5&quot;:&quot;西南风&quot;,&quot;6&quot;:&quot;西风&quot;,&quot;7&quot;:&quot;西北风&quot;,&quot;8&quot;:&quot;北风&quot;,&quot;9&quot;:&quot;旋转风&quot;&#125;;    </span><br><span class="line">//定义风力数组  </span><br><span class="line">var flArr=&#123;&quot;0&quot;:&quot;微风&quot;,&quot;1&quot;:&quot;3-4级&quot;,&quot;2&quot;:&quot;4-5级&quot;,&quot;3&quot;:&quot;5-6级&quot;,&quot;4&quot;:&quot;6-7级&quot;,&quot;5&quot;:&quot;7-8级&quot;,&quot;6&quot;:&quot;8-9级&quot;,&quot;7&quot;:&quot;9-10级&quot;,&quot;8&quot;:&quot;10-11级&quot;,&quot;9&quot;:&quot;11-12级&quot;&#125;;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>6天预报数据<br>URL： <a href="http://m.weather.com.cn/data/101190408.html" target="_blank" rel="noopener">http://m.weather.com.cn/data/101190408.html</a><br>该接口来源网络，应该是一个流传比较久的接口，大发现准确性和稳定性可能不稳定。接口分析如下：<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"weatherinfo"</span>:&#123;</span><br><span class="line">        #基本信息</span><br><span class="line">        "city":"北京","city_en":"beijing","date_y":"2013年9月24日","date":"","week":"星期二","fchh":"11","cityid":"101010100",</span><br><span class="line">        #6天温度范围</span><br><span class="line">        "temp1":"22℃~11℃","temp2":"25℃~11℃","temp3":"26℃~13℃","temp4":"25℃~15℃","temp5":"25℃~16℃","temp6":"24℃~16℃",</span><br><span class="line">        #6天温度范围（华氏）</span><br><span class="line">        "tempF1":"71.6℉~51.8℉","tempF2":"77℉~51.8℉","tempF3":"78.8℉~55.4℉","tempF4":"77℉~59℉","tempF5":"77℉~60.8℉","tempF6":"75.2℉~60.8℉",</span><br><span class="line">        #6天天气</span><br><span class="line">        "weather1":"多云转晴","weather2":"晴","weather3":"晴","weather4":"晴转多云","weather5":"阴转阵雨","weather6":"多云",</span><br><span class="line">        #6天天气图示（每天2张）</span><br><span class="line">        "img1":"1","img2":"0","img3":"0","img4":"99","img5":"0","img6":"99","img7":"0","img8":"1","img9":"2","img10":"3","img11":"1","img12":"99",</span><br><span class="line">        "img_single":"1",</span><br><span class="line">        #6天天气图示文字（每天2）</span><br><span class="line">        "img_title1":"多","img_title2":"晴","img_title3":"晴","img_title4":"晴","img_title5":"晴","img_title6":"晴","img_title7":"晴","img_title8":"多云","img_title9":"阴","img_title10":"阵雨","img_title11":"多云","img_title12":"多云",</span><br><span class="line">        "img_title_single":"多云",</span><br><span class="line">        #6天风</span><br><span class="line">        "wind1":"北风3-4级转微风","wind2":"微风","wind3":"微风","wind4":"微风","wind5":"微风","wind6":"微风",</span><br><span class="line">        "fx1":"北风","fx2":"微风",</span><br><span class="line">        #6天风力情况</span><br><span class="line">        "fl1":"3-4级转小于3级","fl2":"小于3级","fl3":"小于3级","fl4":"小于3级","fl5":"小于3级","fl6":"小于3级",</span><br><span class="line">        #24小时内</span><br><span class="line">        "index":"较冷","index_d":"建议着大衣、呢外套加毛衣、卫衣等服装。体弱者宜着厚外套、厚毛衣。因昼夜温差较大，注意增减衣服。",</span><br><span class="line">        #48小时内</span><br><span class="line">        "index48":"较舒适","index48_d":"建议着薄外套或牛仔衫裤等服装。年老体弱者宜着夹克衫、薄毛衣等。昼夜温差较大，注意适当增减衣服。",</span><br><span class="line">        #紫外 洗车 旅游 舒适指数 晨练 晾晒 过敏</span><br><span class="line">        "index_uv":"弱",</span><br><span class="line">        "index48_uv":"强",</span><br><span class="line">        "index_xc":"适宜",</span><br><span class="line">        "index_tr":"适宜",</span><br><span class="line">        "index_co":"舒",</span><br><span class="line">        "st1":"21","st2":"12","st3":"24","st4":"12","st5":"25","st6":"14", #不明</span><br><span class="line">        "index_cl":"较适宜",</span><br><span class="line">        "index_ls":"适宜",</span><br><span class="line">        "index_ag":"极易发"</span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>####3. 相应图片信息接口<br>不同天气对应不同图片，每天两张图片对应白天和晚上天气，下面以晴天为例演示几种可用的图片类型。 </p>
+<p>来自weather.com.cn的图片：<br>20x20：<a href="http://m.weather.com.cn/img/c0.gif" target="_blank" rel="noopener">http://m.weather.com.cn/img/c0.gif</a><br>50x46：<a href="http://m.weather.com.cn/img/b0.gif" target="_blank" rel="noopener">http://m.weather.com.cn/img/b0.gif</a><br>29x20：<a href="http://www.weather.com.cn/m/i/weatherpic/29x20/d0.gif" target="_blank" rel="noopener">http://www.weather.com.cn/m/i/weatherpic/29x20/d0.gif</a>    #白天带黄色背景<br>29x20：<a href="http://www.weather.com.cn/m2/i/icon_weather/29x20/n00.gif" target="_blank" rel="noopener">http://www.weather.com.cn/m2/i/icon_weather/29x20/n00.gif</a> #夜间带深色背景<br>城市LOGO：<a href="http://poster.weather.com.cn/p_files/base/101020100.jpg" target="_blank" rel="noopener">http://poster.weather.com.cn/p_files/base/101020100.jpg</a></p>
+<p>c打头的图片是20<em>20像素的，b打头的是50</em>46像素的，d打头的是反白的图标，29<em>20像素，n打头的是夜间反白图标，29</em>20像素，注意这里的文件名是两位数字！</p>
+<p>来自mobile.weather.com的图片(图片看起来更美观）)：<br>晴天：<a href="http://mobile.weather.com.cn/images/day/00.png" target="_blank" rel="noopener">http://mobile.weather.com.cn/images/day/00.png</a><br>多云：<a href="http://mobile.weather.com.cn/images/day/01.png" target="_blank" rel="noopener">http://mobile.weather.com.cn/images/day/01.png</a><br>多云晚上： <a href="http://mobile.weather.com.cn/images/night/01.png" target="_blank" rel="noopener">http://mobile.weather.com.cn/images/night/01.png</a><br>下雨：<a href="http://mobile.weather.com.cn/images/day/07.png" target="_blank" rel="noopener">http://mobile.weather.com.cn/images/day/07.png</a><br>阴天：<a href="http://mobile.weather.com.cn/images/day/02.png" target="_blank" rel="noopener">http://mobile.weather.com.cn/images/day/02.png</a>   </p>
+<p>####4. 其他数据获取接口<br>天气资讯数据： <a href="http://mobile.weather.com.cn/data/news/khdjson.htm?_=1381891660018" target="_blank" rel="noopener">http://mobile.weather.com.cn/data/news/khdjson.htm?_=1381891660018</a><br>室外活动指数数据：<a href="http://mobile.weather.com.cn/data/zsM/101010100.html?_=1381891661502" target="_blank" rel="noopener">http://mobile.weather.com.cn/data/zsM/101010100.html?_=1381891661502</a><br>3H预测数据接口： <a href="http://mobile.weather.com.cn/data/forecast3h/101010100.html?_=1381891661605" target="_blank" rel="noopener">http://mobile.weather.com.cn/data/forecast3h/101010100.html?_=1381891661605</a> </p>
+<p>如有特殊天气发生，通过预警接口可获取预警数据，详细如下：<br>特殊天气预警接口：<a href="http://product.weather.com.cn/alarm/stationalarm.php?areaid=101190401&amp;count=-1&amp;_=1381894097508" target="_blank" rel="noopener">http://product.weather.com.cn/alarm/stationalarm.php?areaid=101190401&amp;count=-1&amp;_=1381894097508</a><br>信息格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var alarminfo=&#123;&quot;count&quot;:&quot;25&quot;,&quot;data&quot;:[[&quot;江苏省&quot;,&quot;**10119-20131204220706-1203.html**&quot;]]&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>预警内容获取：<a href="http://www.weather.com.cn/data/alarm/10119-20131204220706-1203.html" target="_blank" rel="noopener">http://www.weather.com.cn/data/alarm/10119-20131204220706-1203.html</a><br>预警信息页面：<a href="http://mobile.weather.com.cn/yj_content.html?file=10119-20131204220706-1203.html" target="_blank" rel="noopener">http://mobile.weather.com.cn/yj_content.html?file=10119-20131204220706-1203.html</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var alarminfo=&#123;</span><br><span class="line">    &quot;ALERTID&quot;:&quot;201312042208582381大雾橙色&quot;,</span><br><span class="line">    &quot;PROVINCE&quot;:&quot;江苏省&quot;,</span><br><span class="line">    &quot;CITY&quot;:&quot;&quot;,&quot;STATIONNAME&quot;:&quot;&quot;,</span><br><span class="line">    &quot;SIGNALTYPE&quot;:&quot;大雾&quot;,</span><br><span class="line">    &quot;SIGNALLEVEL&quot;:&quot;橙色&quot;,</span><br><span class="line">    &quot;ISSUETIME&quot;:&quot;2013-12-04 22:07:06&quot;,</span><br><span class="line">    &quot;ISSUECONTENT&quot;:&quot;江苏省气象台13年12月4日21时57分发布大雾橙色预警信号。目前淮安、盐城、南通、扬州和泰州的大部分地区已经出现能见度小于200米的雾并将持续，另外预计未来12小时内徐州、连云港、宿迁、南京、镇江、常州、无锡和苏州的大部分地区将出现能见度小于1000米、大于等于200米的雾。&quot;,</span><br><span class="line">    &quot;UNDERWRITER&quot;:&quot;魏建苏&quot;,</span><br><span class="line">    &quot;RELIEVETIME&quot;:&quot;2013-12-05 22:07:06&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>####5. 获取全国所有城市代码列表<br><strong>方法一</strong><br>XML接口根节点： <a href="http://flash.weather.com.cn/wmaps/xml/china.xml" target="_blank" rel="noopener">http://flash.weather.com.cn/wmaps/xml/china.xml</a><br>XML接口主要作用是递归获取全国几千个县以上单位的城市代码，如：<br>江苏的XML地址为：<a href="http://flash.weather.com.cn/wmaps/xml/shanghai.xml" target="_blank" rel="noopener">http://flash.weather.com.cn/wmaps/xml/shanghai.xml</a><br>苏州的XML地址为：<a href="http://flash.weather.com.cn/wmaps/xml/jiangsu.xml" target="_blank" rel="noopener">http://flash.weather.com.cn/wmaps/xml/jiangsu.xml</a><br>上面页面获得太仓city code：101190408<br>合成太仓天气信息地址：<a href="http://m.weather.com.cn/data/101190408.html" target="_blank" rel="noopener">http://m.weather.com.cn/data/101190408.html</a></p>
+<p>下面贴一段<a href="https://github.com/jsjwolf/good_utils/blob/master/getAllCityCode4Weather_com.php" target="_blank" rel="noopener">PHP代码</a>实现的，通过XML接口根节点递归获得全国几千个县以上城市cide code的代码，供参考(可直接在终端下运行）：</p>
+<p><strong>方法二</strong><br>更新：最新发现可以一次性获取全国+国外主要城市，8763个城市列表信息。<br>URL：<a href="http://mobile.weather.com.cn/js/citylist.xml" target="_blank" rel="noopener">http://mobile.weather.com.cn/js/citylist.xml</a>  </p>
+<p>###Yahoo天气预报接口<br>URL: <a href="http://weather.yahooapis.com/forecastrss?w=2151330&amp;u=c" target="_blank" rel="noopener">http://weather.yahooapis.com/forecastrss?w=2151330&amp;u=c</a><br>该接口没有测试。</p>
+<p>##二 环境指数接口<br>最近大半个中国发生的严重雾霾天气，震惊了我们的老百姓，PM2.5指数概念深入人心。目前有两个接口推荐：  </p>
+<ul>
+<li>pm25.in，需要申请KEY,次数有限制，数据内容丰富，格式清楚；</li>
+<li>国家气象局，无需KEY，且次数无限制，数据内容简单，无PM10数据。</li>
+</ul>
+<h3 id="pm25-in-PM10-PM2-5数值查询接口"><a href="#pm25-in-PM10-PM2-5数值查询接口" class="headerlink" title="pm25.in PM10/PM2.5数值查询接口"></a>pm25.in PM10/PM2.5数值查询接口</h3><p><a href="pm25.in：http://www.pm25.in/api_doc">pm25.in主页</a>，pm25.in是一家第三方提供pm2.5/pm10环境数据的网站，数据来源于中国国家环境监测中心，其接口使用需要申请KEY（具体请参考其官方网站）。  </p>
+<p>PM10调用：<a href="http://www.pm25.in/api/querys/pm10.json?city=%E4%B8%8A%E6%B5%B7&amp;token=5j1znBVAsnSf5xQyNQyq&amp;avg" target="_blank" rel="noopener">http://www.pm25.in/api/querys/pm10.json?city=%E4%B8%8A%E6%B5%B7&amp;token=5j1znBVAsnSf5xQyNQyq&amp;avg</a>(该链接中的Key仅供测试用，请自行申请）<br>数据格式如下：（<strong>最后一行为所有检测点平均值</strong>）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">&#123;&quot;aqi&quot;:147,&quot;area&quot;:&quot;上海&quot;,&quot;pm10&quot;:180,&quot;pm10_24h&quot;:167,&quot;position_name&quot;:&quot;普陀&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;轻度污染&quot;,&quot;station_code&quot;:&quot;1141A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:163,&quot;area&quot;:&quot;上海&quot;,&quot;pm10&quot;:151,&quot;pm10_24h&quot;:156,&quot;position_name&quot;:&quot;十五厂&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;中度污染&quot;,&quot;station_code&quot;:&quot;1142A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:150,&quot;area&quot;:&quot;上海&quot;,&quot;pm10&quot;:0,&quot;pm10_24h&quot;:0,&quot;position_name&quot;:&quot;虹口&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;轻度污染&quot;,&quot;station_code&quot;:&quot;1143A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:170,&quot;area&quot;:&quot;上海&quot;,&quot;pm10&quot;:0,&quot;pm10_24h&quot;:0,&quot;position_name&quot;:&quot;徐汇上师大&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;中度污染&quot;,&quot;station_code&quot;:&quot;1144A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:0,&quot;area&quot;:&quot;上海&quot;,&quot;pm10&quot;:0,&quot;pm10_24h&quot;:0,&quot;position_name&quot;:&quot;杨浦四漂&quot;,&quot;primary_pollutant&quot;:null,&quot;quality&quot;:null,&quot;station_code&quot;:&quot;1145A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:79,&quot;area&quot;:&quot;上海&quot;,&quot;pm10&quot;:115,&quot;pm10_24h&quot;:108,&quot;position_name&quot;:&quot;青浦淀山湖&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM10)&quot;,&quot;quality&quot;:&quot;良&quot;,&quot;station_code&quot;:&quot;1146A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:160,&quot;area&quot;:&quot;上海&quot;,&quot;pm10&quot;:0,&quot;pm10_24h&quot;:121,&quot;position_name&quot;:&quot;静安监测站&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;中度污染&quot;,&quot;station_code&quot;:&quot;1147A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:150,&quot;area&quot;:&quot;上海&quot;,&quot;pm10&quot;:198,&quot;pm10_24h&quot;:135,&quot;position_name&quot;:&quot;浦东川沙&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;轻度污染&quot;,&quot;station_code&quot;:&quot;1148A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:152,&quot;area&quot;:&quot;上海&quot;,&quot;pm10&quot;:152,&quot;pm10_24h&quot;:150,&quot;position_name&quot;:&quot;浦东新区监测站&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;中度污染&quot;,&quot;station_code&quot;:&quot;1149A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:0,&quot;area&quot;:&quot;上海&quot;,&quot;pm10&quot;:0,&quot;pm10_24h&quot;:0,&quot;position_name&quot;:&quot;浦东张江&quot;,&quot;primary_pollutant&quot;:null,&quot;quality&quot;:null,&quot;station_code&quot;:&quot;1150A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:146,&quot;area&quot;:&quot;上海&quot;,&quot;pm10&quot;:159,&quot;pm10_24h&quot;:139,&quot;position_name&quot;:null,&quot;primary_pollutant&quot;:null,&quot;quality&quot;:&quot;轻度污染&quot;,&quot;station_code&quot;:null,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<p>PM2.5调用：<a href="http://www.pm25.in/api/querys/pm2_5.json?city=%E4%B8%8A%E6%B5%B7&amp;token=5j1znBVAsnSf5xQyNQyq&amp;avg" target="_blank" rel="noopener">http://www.pm25.in/api/querys/pm2_5.json?city=%E4%B8%8A%E6%B5%B7&amp;token=5j1znBVAsnSf5xQyNQyq&amp;avg</a><strong>(该链接中的Key仅供测试用，请自行申请）</strong><br>数据格式如下：（<strong>最后一行为所有检测点平均值</strong>）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">&#123;&quot;aqi&quot;:147,&quot;area&quot;:&quot;上海&quot;,&quot;pm2_5&quot;:105,&quot;pm2_5_24h&quot;:112,&quot;position_name&quot;:&quot;普陀&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;轻度污染&quot;,&quot;station_code&quot;:&quot;1141A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:163,&quot;area&quot;:&quot;上海&quot;,&quot;pm2_5&quot;:129,&quot;pm2_5_24h&quot;:124,&quot;position_name&quot;:&quot;十五厂&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;中度污染&quot;,&quot;station_code&quot;:&quot;1142A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:150,&quot;area&quot;:&quot;上海&quot;,&quot;pm2_5&quot;:124,&quot;pm2_5_24h&quot;:115,&quot;position_name&quot;:&quot;虹口&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;轻度污染&quot;,&quot;station_code&quot;:&quot;1143A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:170,&quot;area&quot;:&quot;上海&quot;,&quot;pm2_5&quot;:141,&quot;pm2_5_24h&quot;:129,&quot;position_name&quot;:&quot;徐汇上师大&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;中度污染&quot;,&quot;station_code&quot;:&quot;1144A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:0,&quot;area&quot;:&quot;上海&quot;,&quot;pm2_5&quot;:0,&quot;pm2_5_24h&quot;:0,&quot;position_name&quot;:&quot;杨浦四漂&quot;,&quot;primary_pollutant&quot;:null,&quot;quality&quot;:null,&quot;station_code&quot;:&quot;1145A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:79,&quot;area&quot;:&quot;上海&quot;,&quot;pm2_5&quot;:0,&quot;pm2_5_24h&quot;:0,&quot;position_name&quot;:&quot;青浦淀山湖&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM10)&quot;,&quot;quality&quot;:&quot;良&quot;,&quot;station_code&quot;:&quot;1146A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:160,&quot;area&quot;:&quot;上海&quot;,&quot;pm2_5&quot;:103,&quot;pm2_5_24h&quot;:122,&quot;position_name&quot;:&quot;静安监测站&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;中度污染&quot;,&quot;station_code&quot;:&quot;1147A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:150,&quot;area&quot;:&quot;上海&quot;,&quot;pm2_5&quot;:163,&quot;pm2_5_24h&quot;:115,&quot;position_name&quot;:&quot;浦东川沙&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;轻度污染&quot;,&quot;station_code&quot;:&quot;1148A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:152,&quot;area&quot;:&quot;上海&quot;,&quot;pm2_5&quot;:127,&quot;pm2_5_24h&quot;:116,&quot;position_name&quot;:&quot;浦东新区监测站&quot;,&quot;primary_pollutant&quot;:&quot;颗粒物(PM2.5)&quot;,&quot;quality&quot;:&quot;中度污染&quot;,&quot;station_code&quot;:&quot;1149A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:0,&quot;area&quot;:&quot;上海&quot;,&quot;pm2_5&quot;:0,&quot;pm2_5_24h&quot;:0,&quot;position_name&quot;:&quot;浦东张江&quot;,&quot;primary_pollutant&quot;:null,&quot;quality&quot;:null,&quot;station_code&quot;:&quot;1150A&quot;,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;,</span><br><span class="line">&#123;&quot;aqi&quot;:146,&quot;area&quot;:&quot;上海&quot;,&quot;pm2_5&quot;:127,&quot;pm2_5_24h&quot;:119,&quot;position_name&quot;:null,&quot;primary_pollutant&quot;:null,&quot;quality&quot;:&quot;轻度污染&quot;,&quot;station_code&quot;:null,&quot;time_point&quot;:&quot;2013-12-04T19:00:00Z&quot;&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意: 部分城市可能没有pm2.5/pm10数据；</strong>  </p>
+<h3 id="气象局接口PM2-5数值查询接口"><a href="#气象局接口PM2-5数值查询接口" class="headerlink" title="气象局接口PM2.5数值查询接口"></a>气象局接口PM2.5数值查询接口</h3><p>气象局接口目前提供PM2.5和AQI数据查询，暂没有发现PM10查询接口。该接口目前不需要申请KEY，可以直接使用。    </p>
+<p>接口：<a href="http://mobile.weather.com.cn/data/air/101190401.html?_=1386217771438" target="_blank" rel="noopener">http://mobile.weather.com.cn/data/air/101190401.html?_=1386217771438</a><br>页面：<a href="http://mobile.weather.com.cn/air/101190401.html" target="_blank" rel="noopener">http://mobile.weather.com.cn/air/101190401.html</a>  </p>
+<p>格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;k&quot;:&#123;&quot;</span><br><span class="line">    k1&quot;:&quot;?|?|?|?|?|?|?|?|?|?|?|?|?|?|?|?|?|?|?|?|?|?|?|?|?&quot;,</span><br><span class="line">    &quot;k2&quot;:&quot;246|239|156|?|114|114|105|105|119|139|290|300|178|178|193|217|217|217|217|217|217|217|217|217|217&quot;,</span><br><span class="line">    &quot;k3&quot;:&quot;296|289|206|?|148|148|137|137|155|315|340|368|228|228|243|267|267|267|267|267|267|267|267|267|267&quot;,</span><br><span class="line">    &quot;k4&quot;:&quot;201312051100&quot;&#125;&#125;</span><br><span class="line"></span><br><span class="line">解析方法如下：</span><br><span class="line">```  </span><br><span class="line">$pm2d5Str = result.k.k2; </span><br><span class="line">$pm2d5Arr = result.k.k3.split(&quot;|&quot;); </span><br><span class="line">$pm2d5 = $pm2d5Arr[23];</span><br><span class="line"> </span><br><span class="line">$aqiStr=result.k.k3;  </span><br><span class="line">$aqiArr=result.k.k3.split(&quot;|&quot;);  </span><br><span class="line">$aqi = $aqiArr[23];</span><br><span class="line"></span><br><span class="line">$publish_date=result.k.k4;</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>参考github代码：<a href="https://github.com/hxxy2003/Weather-weixin/blob/master/index.php" target="_blank" rel="noopener">https://github.com/hxxy2003/Weather-weixin/blob/master/index.php</a></li>
+<li>一份详细解读参考：<a href="http://g.kehou.com/t1033317914.html" target="_blank" rel="noopener">http://g.kehou.com/t1033317914.html</a></li>
+<li>PM参考：<a href="http://malagis.com/recommended-air-quality-data-pm10-pm2-5.html" target="_blank" rel="noopener">http://malagis.com/recommended-air-quality-data-pm10-pm2-5.html</a>  </li>
+</ul>
+<p>全文完（2013-12-31）</p>
+<hr>
+<p><img align="middle" alt="随手查查" src="/images/about/suishou_WX.jpg" width="300"></p>
+<p>关注『<strong>随手查查</strong>』微信公号，支持以图搜图、天气预报、百科和火车票等信息查询。  </p>
+<hr>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/天气预报接口-PM2-5-PM10-API/" rel="tag"># 天气预报接口 PM2.5 PM10 API</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/12/24/UseGoagentCrossLan/" rel="next" title="利用BAE搭建Goagent代理服务突破内网封锁">
+                <i class="fa fa-chevron-left"></i> 利用BAE搭建Goagent代理服务突破内网封锁
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/01/28/HowTOInstallPrinter/" rel="prev" title="linux桌面打印机配置指南">
+                linux桌面打印机配置指南 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Good Bai</p>
+              <p class="site-description motion-element" itemprop="description">老白的个人博客，有技术文章，有工作总结，也有生活体会。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#pm25-in-PM10-PM2-5数值查询接口"><span class="nav-number">1.</span> <span class="nav-text">pm25.in PM10/PM2.5数值查询接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#气象局接口PM2-5数值查询接口"><span class="nav-number">2.</span> <span class="nav-text">气象局接口PM2.5数值查询接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Good Bai</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
