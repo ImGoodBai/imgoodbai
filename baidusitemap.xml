@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>http://goodbai.com/2013/08/05/WhyLANSoInsecure/</loc>
+    <lastmod>2018-03-24T05:29:52.835Z</lastmod>
+    <data>
+        <display>
+        <title>局域网安全为何如此不堪：演习一次内网攻击</title>
+        <pubTime>2013-08-04T16:00:00.000Z</pubTime>
+        
+        <tag>安全</tag>
+         
+        <tag>Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="tech" url="http://goodbai.com/categories/tech/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://goodbai.com/2013/08/15/WhoMovedYourLinuxOS/</loc>
+    <lastmod>2018-03-24T05:04:42.247Z</lastmod>
+    <data>
+        <display>
+        <title>谁动了你的系统：Linux系统安全体检</title>
+        <pubTime>2013-08-14T16:00:00.000Z</pubTime>
+        
+        <tag>安全</tag>
+         
+        <tag>linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="tech" url="http://goodbai.com/categories/tech/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://goodbai.com/2013/12/24/UseGoagentCrossLan/</loc>
+    <lastmod>2018-03-24T05:03:04.435Z</lastmod>
+    <data>
+        <display>
+        <title>利用BAE搭建Goagent代理服务突破内网封锁</title>
+        <pubTime>2013-12-23T16:00:00.000Z</pubTime>
+        
+        <tag>BAE</tag>
+         
+        <tag>代理</tag>
+         
+        <tag>科学上网</tag>
+         
+         
+           
+             
+              <breadCrumb title="tech" url="http://goodbai.com/categories/tech/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://goodbai.com/2013/09/18/UseBAEBuildWXService/</loc>
+    <lastmod>2018-03-24T05:02:04.040Z</lastmod>
+    <data>
+        <display>
+        <title>利用BAE搭建微信公号“小秘书”后台服务</title>
+        <pubTime>2013-09-17T16:00:00.000Z</pubTime>
+        
+        <tag>BAE</tag>
+         
+        <tag>微信公众号</tag>
+         
+         
+           
+             
+              <breadCrumb title="tech" url="http://goodbai.com/categories/tech/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://goodbai.com/2013/12/30/UseForecastAndPMDataAPI/</loc>
+    <lastmod>2018-03-24T05:00:03.465Z</lastmod>
+    <data>
+        <display>
+        <title>天气预报及环境指数开放API综合分析</title>
+        <pubTime>2013-12-29T16:00:00.000Z</pubTime>
+        
+        <tag>API</tag>
+         
+        <tag>天气预报</tag>
+         
+         
+           
+             
+              <breadCrumb title="tech" url="http://goodbai.com/categories/tech/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://goodbai.com/2014/04/21/WXGJCodesAnalytics/</loc>
+    <lastmod>2018-03-24T04:57:56.853Z</lastmod>
+    <data>
+        <display>
+        <title>微信管家源代码分析和文档汇总-持续更新</title>
+        <pubTime>2014-04-20T16:00:00.000Z</pubTime>
+        
+        <tag>微信公众号</tag>
+         
+        <tag>源码分析</tag>
+         
+         
+           
+             
+              <breadCrumb title="tech" url="http://goodbai.com/categories/tech/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://goodbai.com/2014/02/13/WhyCOS_SoHot/</loc>
+    <lastmod>2018-03-24T04:57:16.566Z</lastmod>
+    <data>
+        <display>
+        <title>为什么COS一出世逼格就这么高？</title>
+        <pubTime>2014-02-12T16:00:00.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>国产基础软件</tag>
+         
+         
+           
+             
+              <breadCrumb title="event" url="http://goodbai.com/categories/event/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://goodbai.com/2014/02/12/ImageSearchAPI/</loc>
+    <lastmod>2018-03-24T04:56:52.832Z</lastmod>
+    <data>
+        <display>
+        <title>可用的图片搜索（包括以图搜图）Web API全解析</title>
+        <pubTime>2014-02-11T16:00:00.000Z</pubTime>
+        
+        <tag>API</tag>
+         
+        <tag>以图搜图</tag>
+         
+         
+           
+             
+              <breadCrumb title="tech" url="http://goodbai.com/categories/tech/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://goodbai.com/2014/02/12/Baike_Translation_LunarAPI/</loc>
+    <lastmod>2018-03-24T04:56:25.171Z</lastmod>
+    <data>
+        <display>
+        <title>百科_翻译_黄历API分析和常用符号表</title>
+        <pubTime>2014-02-11T16:00:00.000Z</pubTime>
+        
+        <tag>API</tag>
+         
+        <tag>百科</tag>
+         
+        <tag>翻译</tag>
+         
+         
+           
+             
+              <breadCrumb title="tech" url="http://goodbai.com/categories/tech/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://goodbai.com/2014/01/28/HowTOInstallPrinter/</loc>
+    <lastmod>2018-03-24T04:55:54.595Z</lastmod>
+    <data>
+        <display>
+        <title>linux桌面打印机配置指南</title>
+        <pubTime>2014-01-27T16:00:00.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="tech" url="http://goodbai.com/categories/tech/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://goodbai.com/2014/04/10/HowToICP/</loc>
+    <lastmod>2018-03-24T04:50:31.887Z</lastmod>
+    <data>
+        <display>
+        <title>阿里云个人网站备案过程全记录</title>
+        <pubTime>2014-04-09T16:00:00.000Z</pubTime>
+        
+        <tag>ICP备案</tag>
+         
+         
+           
+             
+              <breadCrumb title="tech" url="http://goodbai.com/categories/tech/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+</urlset>
